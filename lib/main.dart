@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
         useMaterial3: true,
         fontFamily: 'Poppins'
       ),
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.home: (context) => const HomeScreen(),
         AppRoutes.login: (context) => const LoginScreen(),
         AppRoutes.welcome: (context) => const WelcomeScreen(),
-        AppRoutes.register: (context) => const RegisterScreen(),
+        AppRoutes.register: (context) =>  RegisterScreen(),
       },
     );
   }

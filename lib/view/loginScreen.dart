@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_mar14/providers/homeProvider.dart';
 import '../providers/authProvider.dart';
+import '../storage/dbFns.dart';
 import '../utilites/appAssets.dart';
 import '../utilites/appRoutes.dart';
 import '../utilites/customText.dart';
@@ -67,6 +69,17 @@ class BottomSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void loginUser(String email, String pwd) async {
+        var data = await SQLHelperLogin.checkUserExist(email, pwd);
+        if (data.isNotEmpty) {
+          Navigator.pushNamed(context, AppRoutes.home);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Invalid credentials")));
+        }
+
+    }
+
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
@@ -118,7 +131,7 @@ class BottomSection extends StatelessWidget {
             ),
             CustomTextButton(
               onPressed: () {
-                 Navigator.pushNamed(context, AppRoutes.home);
+                loginUser(emailController.text,passwordController.text);
               },
               height: 60,
               color: Colors.deepOrange,
@@ -129,11 +142,12 @@ class BottomSection extends StatelessWidget {
             ),
             TextButton(
                 onPressed: () {
+                 // Provider.of<HomeProvider>(context,listen: false).callForMovies();
                   Navigator.pushNamed(context, AppRoutes.register);
                 },
                 child: RichText(
                   text: TextSpan(
-                      text: 'Not a user?',
+                      text: 'Not a user? ',
                       style: TextStyle(color: Colors.black54),
                       children: [
                         TextSpan(
