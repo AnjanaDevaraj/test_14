@@ -72,7 +72,7 @@ class BottomSection extends StatelessWidget {
     void loginUser(String email, String pwd) async {
         var data = await SQLHelperLogin.checkUserExist(email, pwd);
         if (data.isNotEmpty) {
-          Navigator.pushNamed(context, AppRoutes.home);
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Invalid credentials")));

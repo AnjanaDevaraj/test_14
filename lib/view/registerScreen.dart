@@ -82,7 +82,7 @@ class BottomSection extends StatelessWidget {
           name, phone, email, password, profession);
       print(id);
       if (id != null) {
-        Navigator.pushNamed(context, AppRoutes.home);
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Registration Failed")));
