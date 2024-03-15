@@ -21,6 +21,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: <Widget>[
+          PopupMenuButton(
+            onSelected: (value) {
+              if (value == 'companyInfo') {
+                _showCompanyInfoDialog(context);
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                value: 'companyInfo',
+                child: Text('Company Info'),
+              ),
+            ],
+          ),
+        ],
+      ),
       body: Consumer<HomeProvider>(
         builder: (context, provider, child) {
           return Padding(
@@ -60,15 +78,60 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      title: Image.network(provider.results[index].poster.toString()??""),
-                      trailing: Expanded(
+                      title: Image.network(
+                          provider.results[index].poster.toString() ?? ""),
+                      trailing: SizedBox(
+                        height: 150,
+                        width: MediaQuery.of(context).size.width*0.3,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(provider.results[index].title.toString()??""),
-                            Text("Genre: ${provider.results[index].genre.toString()??""}"),
-                            Text("Director: ${provider.results[index].director.toString()??""}"),
+                            Text(
+                              provider.results[index].title.toString() ?? "",
+                              style: TextStyle(fontSize: 24),
+                            ),
+                            Text(
+                                "Genre: ${provider.results[index].genre.toString() ?? ""}",
+                                style: TextStyle(fontSize: 18)),
+                            Text(
+                              "Director: ${provider.results[index].director.toString() ?? ""}",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              "Starring: ${provider.results[index].stars.toString() ?? ""}",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "${provider.results[index].stars.toString() ?? ""} | ",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Text(
+                                  "${provider.results[index].language.toString() ?? ""} | ",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Text(
+                                  "${provider.results[index].releasedDate.toString() ?? ""}",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "${provider.results[index].pageViews.toString() ?? ""} views | ",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.blue),
+                                ),
+                                Text(
+                                  "Voted by ${provider.results[index].pageViews.toString() ?? ""} People",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.blue),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -94,6 +157,35 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
+    );
+  }
+
+  void _showCompanyInfoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Company Info'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Company: Geeksynergy Technologies Pvt Ltd'),
+              Text('Address: Sanjayanagar, Bengaluru-56'),
+              Text('Phone: XXXXXXXXX09'),
+              Text('Email: XXXXXX@gmail.com'),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
